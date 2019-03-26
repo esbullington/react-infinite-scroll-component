@@ -72,7 +72,7 @@ export default class InfiniteScroll extends Component {
   componentWillUnmount() {
     this.el.removeEventListener("scroll", this.throttledOnScrollListener);
 
-    if (this.props.pullDownToRefresh) {
+    if (this.props.pullToRefresh) {
       this.el.removeEventListener("touchstart", this.onStart);
       this.el.removeEventListener("touchmove", this.onMove);
       this.el.removeEventListener("touchend", this.onEnd);
@@ -124,13 +124,13 @@ export default class InfiniteScroll extends Component {
     if (!this.dragging) return;
     this.currentY = evt.pageY || evt.touches[0].pageY;
 
-    if (this.props.invert && this.currentY - this.startY <= this.props.pullDownToRefreshThreshold) {
+    if (this.props.invert && this.currentY - this.startY <= this.props.pullToRefreshThreshold) {
       this.setState({
         pullToRefreshThresholdBreached: true
       });
     }
 
-    if (!this.props.invert && this.currentY - this.startY >= this.props.pullDownToRefreshThreshold) {
+    if (!this.props.invert && this.currentY - this.startY >= this.props.pullToRefreshThreshold) {
       this.setState({
         pullToRefreshThresholdBreached: true
       });
@@ -285,7 +285,7 @@ export default class InfiniteScroll extends Component {
           ref={infScroll => (this._infScroll = infScroll)}
           style={style}
         >
-          {this.props.pullDownToRefresh && !this.props.invert && pullToRefreshContent}
+          {this.props.pullToRefresh && !this.props.invert && pullToRefreshContent}
           {this.props.invert &&
             !this.state.showLoader &&
             !hasChildren &&
@@ -301,7 +301,7 @@ export default class InfiniteScroll extends Component {
             this.props.loader}
           {!this.props.invert && this.state.showLoader && this.props.hasMore && this.props.loader}
           {!this.props.invert && !this.props.hasMore && this.props.endMessage}
-          {this.props.pullDownToRefresh && this.props.invert && pullToRefreshContent}
+          {this.props.pullToRefresh && this.props.invert && pullToRefreshContent}
         </div>
       </div>
     );
