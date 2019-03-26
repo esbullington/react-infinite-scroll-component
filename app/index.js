@@ -12,12 +12,12 @@ export default class InfiniteScroll extends Component {
       actionTriggered: false,
       pullToRefreshThresholdBreached: false
     };
-    // variables to keep track of pull down behaviour
+    // variables to keep track of pull behaviour
     this.startY = 0;
     this.currentY = 0;
     this.dragging = false;
     // will be populated in componentDidMount
-    // based on the height of the pull down element
+    // based on the height of the pull element
     this.maxPullDistance = 0;
 
     this.onScrollListener = this.onScrollListener.bind(this);
@@ -46,7 +46,7 @@ export default class InfiniteScroll extends Component {
       this.el.scrollTo(0, this.el.scrollHeight);
     }
 
-    if (this.props.pullDownToRefresh) {
+    if (this.props.pullToRefresh) {
       this.el.addEventListener("touchstart", this.onStart);
       this.el.addEventListener("touchmove", this.onMove);
       this.el.addEventListener("touchend", this.onEnd);
@@ -55,14 +55,14 @@ export default class InfiniteScroll extends Component {
       this.el.addEventListener("mousemove", this.onMove);
       this.el.addEventListener("mouseup", this.onEnd);
 
-      // get BCR of pullDown element to position it above
+      // get BCR of pull element to position it above
       this.maxPullDistance = this.props.invert ? this._pullControl.lastChild.getBoundingClientRect().height : this._pullControl.firstChild.getBoundingClientRect().height;
       this.forceUpdate();
 
       if (typeof this.props.refreshFunction !== "function") {
         throw new Error(
           `Mandatory prop "refreshFunction" missing.
-          Pull Down To Refresh functionality will not work
+          Pull To Refresh functionality will not work
           as expected. Check README.md for usage'`
         );
       }
@@ -136,7 +136,7 @@ export default class InfiniteScroll extends Component {
       });
     }
 
-    // so you can drag upto 1.5 times of the maxPullDownDistance
+    // so you can drag upto 1.5 times of the maxPullDistance
     if (!this.props.invert && this.currentY - this.startY > this.maxPullDistance * 1.5) return;
     if (this.props.invert && this.currentY - this.startY < this.maxPullDistance * 1.5) return;
 
@@ -238,9 +238,9 @@ export default class InfiniteScroll extends Component {
       !!(this.props.children && this.props.children.length);
 
     // because heighted infiniteScroll visualy breaks
-    // on drag down as overflow becomes visible
+    // on drag as overflow becomes visible
     const outerDivStyle =
-      this.props.pullDownToRefresh && this.props.height
+      this.props.pullToRefresh && this.props.height
         ? { overflow: "auto" }
         : {};
 
@@ -309,7 +309,7 @@ export default class InfiniteScroll extends Component {
 }
 
 InfiniteScroll.defaultProps = {
-  pullToRefreshContent: <h3>Pull down to refresh</h3>,
+  pullToRefreshContent: <h3>Pull to refresh</h3>,
   releaseToRefreshContent: <h3>Release to refresh</h3>,
   pullToRefreshThreshold: 100,
   disableBrowserPullToRefresh: true,
