@@ -137,8 +137,8 @@ export default class InfiniteScroll extends Component {
     }
 
     // so you can drag upto 1.5 times of the maxPullDownDistance
-    if (!this.invert && this.currentY - this.startY > this.maxPullDistance * 1.5) return;
-    if (this.invert && this.currentY - this.startY < this.maxPullDistance * 1.5) return;
+    if (!this.props.invert && this.currentY - this.startY > this.maxPullDistance * 1.5) return;
+    if (this.props.invert && this.currentY - this.startY < this.maxPullDistance * 1.5) return;
 
     this._infScroll.style.overflow = "visible";
     this._infScroll.style.transform = `translate3d(0px, ${this.currentY -
